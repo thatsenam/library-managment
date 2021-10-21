@@ -22,14 +22,14 @@ class LogController extends Controller
 			->orderBy('issued_at', 'DESC');
 
 			// dd($logs);
-		
+
 		$logs = $logs->get();
 
 		for($i=0; $i<count($logs); $i++){
-	        
+
 	        $issue_id = $logs[$i]['book_issue_id'];
 	        $student_id = $logs[$i]['student_id'];
-	        
+
 	        // to get the name of the book from book issue id
 	        $issue = Issue::find($issue_id);
 	        $book_id = $issue->book_id;
@@ -63,75 +63,11 @@ class LogController extends Controller
 		$data = $request->all()['data'];
 		$bookID = $data['bookID'];
 		$studentID = $data['studentID'];
-		
 		$student = Student::find($studentID);
-		
-		if($student == NULL){
-			return "Invalid Student ID";
-		} else {
-			$approved = $student->approved;
-			
-			if($approved == 0){
 
-				return "Student still not approved by Admin Librarian";
-				// throw new Exception('');
-			} else {
-				$books_issued = $student->books_issued;
-				$category = $student->category;
-				
-				$max_allowed = StudentCategories::where('cat_id', '=', $category)->firstOrFail()->max_allowed;
-				
-				if($books_issued >= $max_allowed){
-
-					return 'Student cannot issue any more books';
-				} else {
-
-					$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
-
-					if($book == NULL){
-
-						return 'Invalid Book Issue ID';
-
-					} else {
-
-						$book_availability = $book->available_status;
-						// dd($book);
-						if($book_availability != 1){
-							return 'Book not available for issue';
-						} else {
-
-							// book is to be issued
-							DB::transaction( function() use($bookID, $studentID) {
-								$log = new Logs;
-
-								$log->book_issue_id = $bookID;
-								$log->student_id	= $studentID;
-								$log->issue_by		= Auth::id();
-								$log->issued_at		= date('Y-m-d H:i');
-								$log->return_time	= 0;
-
-								$log->save();
-
-								$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
-								// changing the availability status
-								$book_issue_update = Issue::where('book_id', $bookID)->where('issue_id', $book->issue_id)->first();
-								$book_issue_update->available_status = 0;
-								$book_issue_update->save();
-
-								// increasing number of books issed by student
-								$student = Student::find($studentID);
-								$student->books_issued = $student->books_issued + 1;
-								$student->save();
-							});
-
-							return 'Book Issued Successfully!';
-						}
-					}
-				}
-			}
-		}
 	}
-
+//php artisan resource-file:create IssueBook --fields=id,student_id,book_id,issue_date,return_date,notes,fine,is_returned
+//php artisan create:resources IssueBook --with-migration
 	public function show($id)
 	{
 		//
@@ -151,7 +87,7 @@ class LogController extends Controller
 		if(!$log->count()){
 			return 'Invalid Book ID entered or book already returned';
 		} else {
-		
+
 			$log = Logs::where($conditions)
 				->firstOrFail();
 
@@ -176,11 +112,11 @@ class LogController extends Controller
 				$issue = Issue::find($issue_id);
 				$issue->available_status = 1;
 				$issue->save();
-				
+
 			});
 
 			return 'Successfully returned';
-			
+
 		}
 	}
 

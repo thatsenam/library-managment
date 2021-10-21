@@ -1,0 +1,14 @@
+[
+    {
+        "model-name": "IssueBook",
+        "resource-file": "issue_books.json"
+    },
+    {
+        "model-name": "Biography",
+        "resource-file": "biographies.json"
+    },
+    {
+        "model-name": "Books",
+        "resource-file": "books.json"
+    }
+]

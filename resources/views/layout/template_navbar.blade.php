@@ -7,11 +7,9 @@
             <div class="nav-collapse collapse navbar-inverse-collapse">
                 <ul class="nav pull-right">
                     <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('images/passport-size.png') }}" class="nav-avatar" />{{ auth()->user()->username }}
+                      {{ auth()->user()->username }}
                         <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" target="_blank">Profile</a></li>
-                            <li class="divider"></li>
                             <li><a href="{{ URL::route('account-sign-out') }}">Logout</a></li>
                         </ul>
                     </li>

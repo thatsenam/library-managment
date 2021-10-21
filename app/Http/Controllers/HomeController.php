@@ -24,7 +24,8 @@ class HomeController extends Controller
         $this->student_categories_list = StudentCategories::select()->orderBy('cat_id')->get();
     }
 
-	public function home(){	
+	public function home(){
+        return  redirect()->route('books.books.index');
 		return view('panel.index')
             ->with('categories_list', $this->categories_list)
             ->with('branch_list', $this->branch_list)

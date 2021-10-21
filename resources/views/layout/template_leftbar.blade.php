@@ -17,38 +17,38 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('all-books') }}">
+                <a href="{{ route('books.books.index') }}">
                     <i class="menu-icon icon-th-list"></i>All Books in Library
                 </a>
             </li>
+{{--            <li>--}}
+{{--                <a href="{{ URL::route('add-book-category') }}">--}}
+{{--                    <i class="menu-icon icon-folder-open-alt"></i>Add Book Category--}}
+{{--                </a>--}}
+{{--            </li>--}}
             <li>
-                <a href="{{ URL::route('add-book-category') }}">
-                    <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
-                </a>
-            </li>
-            <li>
-                <a href="{{ URL::route('add-books') }}">
+                <a href="{{ route('books.books.create') }}">
                     <i class="menu-icon icon-folder-open-alt"></i>Add Books
                 </a>
             </li>
-            <li>
-                <a href="{{ URL::route('settings') }}">
-                    <i class="menu-icon icon-cog"></i>Add Settings
-                </a>
-            </li>
+{{--            <li>--}}
+{{--                <a href="{{ URL::route('settings') }}">--}}
+{{--                    <i class="menu-icon icon-cog"></i>Add Settings--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
             <li>
-                <a href="{{ URL::route('issue-return') }}">
-                    <i class="menu-icon icon-signout"></i>Issue / Return Books
+                <a href="{{ route('issue_books.issue_book.renderIssueReturn') }}">
+                    <i class="menu-icon icon-signout"></i> Return Books
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('currently-issued') }}">
-                    <i class="menu-icon icon-list-ul"></i>View all currently issued books  
+                <a href="{{ route('issue_books.issue_book.index') }}">
+                    <i class="menu-icon icon-list-ul"></i>View all currently issued books
                 </a>
             </li>
         </ul>
-        
+
         <ul class="widget widget-menu unstyled">
             <li><a href="{{ URL::route('account-sign-out') }}"><i class="menu-icon icon-wrench"></i>Logout </a></li>
         </ul>

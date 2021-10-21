@@ -9,8 +9,8 @@
     <meta name="keywords" content="">
 
     <link rel="shortcut icon" href="">
-    <link rel="image_src" href="" />
-    <link rel="canonical" href="" />
+    <link rel="image_src" href=""/>
+    <link rel="canonical" href=""/>
 
     <title>Online Library Management System</title>
 
@@ -18,41 +18,45 @@
     <link type="text/css" href="{{asset('static/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{asset('static/css/theme.css') }}" rel="stylesheet">
     <link type="text/css" href="{{asset('static/images/icons/css/font-awesome.css') }}" rel="stylesheet">
-    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+          rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     @include('common.script_top')
 
 </head>
 <body>
-    <style>
-        .module-head{
-            background-color: #9400D3;
-            color:#fff;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-transform: uppercase;
-            font-style: bold;
-        }
-        .module-head h3{
-            color:#fff;
-        }
+<style>
+    .module-head {
+        background-color: #9400D3;
+        color: #fff;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-transform: uppercase;
+        font-style: bold;
+    }
 
-        .widget-menu{
-            background: #9400D3 !important;
-            color:#fff;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-transform: uppercase;
-            font-style: bold;
-        }
-        .navbar-inner{
-            background: #9400D3 !important;
-            color:#fff;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-transform: uppercase;
-            font-style: bold;
-        }
-    </style>
+    .module-head h3 {
+        color: #fff;
+    }
 
-    @include('layout.template_navbar')
+    .widget-menu {
+        background: #9400D3 !important;
+        color: #fff;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-transform: uppercase;
+        font-style: bold;
+    }
+
+    .navbar-inner {
+        background: #9400D3 !important;
+        color: #fff;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-transform: uppercase;
+        font-style: bold;
+    }
+</style>
+
+@include('layout.template_navbar')
 
 <div class="wrapper">
     <div class="container">
@@ -62,16 +66,16 @@
 
             <div class="span9">
 
-            @include('account.message')
-            @yield('content')
+                @include('account.message')
+                @yield('content')
 
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
-    @include('layout.template_footer')
-    
+@include('layout.template_footer')
+
 
 <script src="{{asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('static/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
@@ -79,7 +83,7 @@
 <script src="{{asset('static/scripts/underscore-min.js') }}" type="text/javascript"></script>
 
 <script src="{{asset('static/custom/js/script.common.js') }}" type="text/javascript"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @include('common.script_bottom')
 
 <script type="text/template" id="alert_box">
@@ -88,9 +92,10 @@
 </script>
 
 <script>
-    $(document).ready(function(){ 
-    $("input").attr("autocomplete", "off");
-});
+    $(document).ready(function () {
+        $("input").attr("autocomplete", "off");
+        $('.searchable').select2({placeholder: '-- Choose --'})
+    });
 </script>
 
 </body>

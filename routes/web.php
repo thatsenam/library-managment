@@ -11,101 +11,106 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookIssuedsController;
+use App\Http\Controllers\IssueBooksController;
+use App\Http\Controllers\BooksController;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Unauthenticated group 
-Route::group(array('before' => 'guest'), function() {
- 
-	// CSRF protection 
-	Route::group(array('before' => 'csrf'), function() {
+// Unauthenticated group
+Route::group(array('before' => 'guest'), function () {
 
-		// Create an account (POST) 
-		Route::post('/create', array(
-			'as' => 'account-create-post',
-			'uses' => 'AccountController@postCreate'
-		));
+    // CSRF protection
+    Route::group(array('before' => 'csrf'), function () {
 
-		// Sign in (POST) 
-		Route::post('/sign-in', array(
-			'as' => 'account-sign-in-post',
-			'uses' => 'AccountController@postSignIn'
-		));
+        // Create an account (POST)
+        Route::post('/create', array(
+            'as' => 'account-create-post',
+            'uses' => 'AccountController@postCreate'
+        ));
 
-		// Sign in (POST) 
-		Route::post('/student-registration', array(
-			'as' => 'student-registration-post',
-			'uses' => 'StudentController@postRegistration'
-		));		
+        // Sign in (POST)
+        Route::post('/sign-in', array(
+            'as' => 'account-sign-in-post',
+            'uses' => 'AccountController@postSignIn'
+        ));
 
-	});
+        // Sign in (POST)
+        Route::post('/student-registration', array(
+            'as' => 'student-registration-post',
+            'uses' => 'StudentController@postRegistration'
+        ));
 
-	// Sign in (GET) 
-	Route::get('/', array(
-		'as' 	=> 'account-sign-in',
-		'uses'	=> 'AccountController@getSignIn'
-	));
+    });
 
-	// Create an account (GET) 
-	Route::get('/create', array(
-		'as' 	=> 'account-create',
-		'uses' 	=> 'AccountController@getCreate'
-	));
+    // Sign in (GET)
+    Route::get('/', array(
+        'as' => 'account-sign-in',
+        'uses' => 'AccountController@getSignIn'
+    ));
 
-	// Student Registeration form 
-	Route::get('/student-registration', array(
-		'as' 	=> 'student-registration',
-		'uses' 	=> 'StudentController@getRegistration'
-	));
-    
+    // Create an account (GET)
+    Route::get('/create', array(
+        'as' => 'account-create',
+        'uses' => 'AccountController@getCreate'
+    ));
+
+    // Student Registeration form
+    Route::get('/student-registration', array(
+        'as' => 'student-registration',
+        'uses' => 'StudentController@getRegistration'
+    ));
+
     // Render search books panel
     Route::get('/book', array(
         'as' => 'search-book',
         'uses' => 'BooksController@searchBook'
-    ));    
-	
+    ));
+
 });
 
 // Main books Controlller left public so that it could be used without logging in too
 Route::resource('/books', 'BooksController');
 
-// Authenticated group 
+// Authenticated group
 // Route::group(array('before' => 'auth'), function() {
-Route::group(['middleware' => ['auth']] , function() {
+Route::group(['middleware' => ['auth']], function () {
 
-	// Home Page of Control Panel
-	Route::get('/home',array(
-		'as' 	=> 'home',
-		'uses'	=> 'HomeController@home'
-	));	
+    // Home Page of Control Panel
+    Route::get('/home', array(
+        'as' => 'home',
+        'uses' => 'HomeController@home'
+    ));
 
-	// Render Add Books panel
+    // Render Add Books panel
     Route::get('/add-books', array(
         'as' => 'add-books',
         'uses' => 'BooksController@renderAddBooks'
-	));
+    ));
 
-	Route::get('/add-book-category', array(
+    Route::get('/add-book-category', array(
         'as' => 'add-book-category',
         'uses' => 'BooksController@renderAddBookCategory'
-	));
-	
-	Route::post('/bookcategory', 'BooksController@BookCategoryStore')->name('bookcategory.store');
-	
+    ));
 
-	// Render All Books panel
+    Route::post('/bookcategory', 'BooksController@BookCategoryStore')->name('bookcategory.store');
+
+
+    // Render All Books panel
     Route::get('/all-books', array(
         'as' => 'all-books',
         'uses' => 'BooksController@renderAllBooks'
-	));
-	
-	Route::get('/bookBycategory/{cat_id}', array(
+    ));
+
+    Route::get('/bookBycategory/{cat_id}', array(
         'as' => 'bookBycategory',
         'uses' => 'BooksController@BookByCategory'
     ));
 
-	// Students
+    // Students
     Route::get('/registered-students', array(
         'as' => 'registered-students',
         'uses' => 'StudentController@renderStudents'
@@ -115,24 +120,26 @@ Route::group(['middleware' => ['auth']] , function() {
     Route::get('/students-for-approval', array(
         'as' => 'students-for-approval',
         'uses' => 'StudentController@renderApprovalStudents'
-	));
-	
-	  // Render students approval panel
-	  Route::get('/settings', array(
+    ));
+    Route::get('student/{id}/approve', 'StudentController@approve')->name('students.approve');
+    Route::get('student/{id}/reject', 'StudentController@reject')->name('students.reject');
+
+    // Render students approval panel
+    Route::get('/settings', array(
         'as' => 'settings',
         'uses' => 'StudentController@Setting'
-	));
-	
-	  // Render students approval panel
-	  Route::post('/setting', array(
+    ));
+
+    // Render students approval panel
+    Route::post('/setting', array(
         'as' => 'settings.store',
         'uses' => 'StudentController@StoreSetting'
     ));
 
     // Main students Controlller resource
-	Route::resource('/student', 'StudentController');
-	
-	Route::post('/studentByattribute', array(
+    Route::resource('/student', 'StudentController');
+
+    Route::post('/studentByattribute', array(
         'as' => 'studentByattribute',
         'uses' => 'StudentController@StudentByAttribute'
     ));
@@ -152,10 +159,35 @@ Route::group(['middleware' => ['auth']] , function() {
     // Main Logs Controlller resource
     Route::resource('/issue-log', 'LogController');
 
-	// Sign out (GET) 
+    // Sign out (GET)
     Route::get('/sign-out', array(
-    	'as' => 'account-sign-out',
-		'uses' => 'AccountController@getSignOut'
+        'as' => 'account-sign-out',
+        'uses' => 'AccountController@getSignOut'
     ));
 
+});
+
+Route::group(['prefix' => 'issue_books'], function () {
+
+    Route::get('/', 'IssueBooksController@index')->name('issue_books.issue_book.index');
+    Route::get('/create', 'IssueBooksController@create')->name('issue_books.issue_book.create');
+    Route::get('/show/{issueBook}', 'IssueBooksController@show')->name('issue_books.issue_book.show')->where('id', '[0-9]+');
+    Route::get('/{issueBook}/edit', 'IssueBooksController@edit')->name('issue_books.issue_book.edit')->where('id', '[0-9]+');
+    Route::post('/', 'IssueBooksController@store')->name('issue_books.issue_book.store');
+    Route::get('/return_book', 'IssueBooksController@renderIssueReturn')->name('issue_books.issue_book.renderIssueReturn');
+    Route::get('/return/{student_id}', 'IssueBooksController@check_books')->name('issue_books.issue_book.check_books');
+    Route::post('/return_book', 'IssueBooksController@return_book')->name('issue_books.issue_book.return_book');
+    Route::put('issue_book/{issueBook}', 'IssueBooksController@update')->name('issue_books.issue_book.update')->where('id', '[0-9]+');
+    Route::delete('/issue_book/{issueBook}', 'IssueBooksController@destroy')->name('issue_books.issue_book.destroy')->where('id', '[0-9]+');
+
+});
+
+Route::group(['prefix' => 'books'], function () {
+    Route::get('/', 'BooksController@index')->name('books.books.index');
+    Route::get('/create','BooksController@create')->name('books.books.create');
+    Route::get('/show/{books}','BooksController@show')->name('books.books.show');
+    Route::get('/{books}/edit','BooksController@edit')->name('books.books.edit');
+    Route::post('/', 'BooksController@store')->name('books.books.store');
+    Route::put('books/{books}', 'BooksController@update')->name('books.books.update');
+    Route::delete('/books/{books}','BooksController@destroy')->name('books.books.destroy');
 });

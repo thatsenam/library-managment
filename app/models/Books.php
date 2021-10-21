@@ -38,15 +38,6 @@ class Books extends Model
      */
     protected $casts = [];
 
-    /**
-     * Get the book for this model.
-     *
-     * @return App\Models\Book
-     */
-    public function book()
-    {
-        return $this->belongsTo('App\Models\Books', 'book_id');
-    }
 
 
     public function category()

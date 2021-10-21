@@ -14,7 +14,7 @@ class AddIdToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
+            $table->integer('id')->nullable();
 
         });
     }

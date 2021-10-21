@@ -22,11 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a488c2e-c6ed-41f2-945d-0827abc8039e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Books.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Books.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_27_095343_create_books_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_27_095343_create_books_table.php" afterDir="false" />
-    </list>
+    <list default="true" id="8a488c2e-c6ed-41f2-945d-0827abc8039e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -167,7 +163,7 @@
       <workItem from="1634707858846" duration="3444000" />
       <workItem from="1634747104419" duration="6698000" />
       <workItem from="1634798379306" duration="240000" />
-      <workItem from="1634824636787" duration="10270000" />
+      <workItem from="1634824636787" duration="10595000" />
     </task>
     <servers />
   </component>

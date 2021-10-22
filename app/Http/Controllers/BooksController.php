@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BookCategories;
 
+use App\Models\Books as Books;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -13,7 +14,7 @@ class BooksController extends Controller
 
     public function index()
     {
-        $booksObjects = \App\Models\Books::with( 'category')->paginate(25);
+        $booksObjects = Books::with( 'category')->paginate(25);
 //        dd($booksObjects);
         return view('books.index', compact('booksObjects'));
     }
@@ -21,7 +22,7 @@ class BooksController extends Controller
 
     public function create()
     {
-        $books =  \App\Models\Books::pluck('title', 'book_id')->all();
+        $books =  Books::pluck('title', 'book_id')->all();
         $categories = BookCategories::pluck('category', 'id')->all();
         $addedBies = [];
 //        dd($books,$categories,$addedBies);
@@ -35,7 +36,7 @@ class BooksController extends Controller
 
         $data = $this->getData($request);
 
-        \App\Models\Books::create($data);
+        Books::create($data);
 
         return redirect()->route('books.books.index')
             ->with('success_message', 'Books was successfully added.');
@@ -44,7 +45,7 @@ class BooksController extends Controller
 
     public function show($id)
     {
-        $books =  \App\Models\Books::with('book', 'category', 'addedby')->findOrFail($id);
+        $books =  Books::with('book', 'category', 'addedby')->findOrFail($id);
 
         return view('books.show', compact('books'));
     }
@@ -52,7 +53,7 @@ class BooksController extends Controller
 
     public function edit($id)
     {
-        $books =  \App\Models\Books::firstWhere('book_id', $id);
+        $books =  Books::firstWhere('book_id', $id);
         $categories = BookCategories::pluck('id', 'id')->all();
         $addedBies = [];
 
@@ -65,7 +66,7 @@ class BooksController extends Controller
 
         $data = $this->getData($request);
 
-        $books =  \App\Models\Books::findOrFail($id);
+        $books =  Books::findOrFail($id);
         $books->update($data);
 
         return redirect()->route('books.books.index')
@@ -76,7 +77,7 @@ class BooksController extends Controller
     public function destroy($id)
     {
 
-        $books =  \App\Models\Books::findOrFail($id);
+        $books =  Books::findOrFail($id);
         $books->delete();
 
         return redirect()->route('books.books.index')
@@ -99,7 +100,7 @@ class BooksController extends Controller
 
         $data = $request->validate($rules);
         $data['added_by'] = 1;
-        $data['id'] = count( \App\Models\Books::query()->get()) + 1;
+        $data['id'] = count( Books::query()->get()) + 1;
         if ($data['description'] == null) {
             $data['description'] = '';
         }
